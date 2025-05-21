@@ -42,6 +42,10 @@ public class Tema {
 	}
 	
 		
+	@OneToMany(mappedBy = "tema", fetch =FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("tema")
+	private List<Postagem> postagem;
+
 	public List<Postagem> getPostagem() {
 		return postagem;
 	}
@@ -49,11 +53,5 @@ public class Tema {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-
-
-
-	@OneToMany(mappedBy = "tema", fetch =FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("tema")
-	private List<Postagem> postagem;
 
 }
