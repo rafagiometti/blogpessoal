@@ -6,7 +6,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,59 +16,64 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "tb_postagens") // CREATE TABLE tb_postagens();
+@Table(name = "tb_postagens")
 public class Postagem {
-	
-	@Id // Primary Key
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
+    
+    @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
 	
-	@Column(length = 100)
-	@NotBlank(message = "O atributo título é obrigatório!")
-	@Size(min = 5, max = 100, message = "O atributo título deve ter no minímo 5 e no máximo 100 caracteres")
+	@NotBlank(message = "O atributo título é Obrigatório!") 
+	@Size(min = 5, max = 100, message = "O atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
 	private String titulo;
 	
-	@Column(length = 1000)
-	@NotBlank(message = "O atributo texto é obrigatório!")
-	@Size(min = 10, max = 1000, message = "O atributo título deve ter no minímo 10 e no máximo 1000 caracteres")
+	@NotBlank(message = "O atributo texto é Obrigatório!")
+	@Size(min = 10, max = 1000, message = "O atributo texto deve conter no mínimo 10 e no máximo 1000 caracteres")
 	private String texto;
 	
 	@UpdateTimestamp
 	private LocalDateTime data;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("Postagem") //Usado para impedir o looping infinito
+	@JsonIgnoreProperties("postagem")
 	private Tema tema;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getTexto() {
-		return texto;
-	}
-
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-
-	public LocalDateTime getData() {
-		return data;
-	}
 	
-	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getTexto() {
+        return this.texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public LocalDateTime getData() {
+        return this.data;
+    }
+
+    public void setData(LocalDateTime data) {
+        this.data = data;
+    }
+
 	public Tema getTema() {
 		return tema;
 	}
@@ -78,9 +82,12 @@ public class Postagem {
 		this.tema = tema;
 	}
 
-	public void setData(LocalDateTime data) {
-		this.data = data;
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	
-	
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+    
 }
